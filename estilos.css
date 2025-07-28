@@ -1,1 +1,212 @@
+/* Paleta de colores */
+:root {
+    --primary-light: #F0E6F6; /* Morado muy claro para el fondo principal */
+    --primary-medium: #D8BFD8; /* Morado claro para los contenedores */
+    --primary-dark: #8A2BE2;  /* Morado vibrante para texto y detalles */
+    --accent-pink: #FF69B4;   /* Rosa para ramos aprobados */
+    --text-dark: #4B0082;     /* Morado oscuro para texto principal */
+    --text-light: #FFFFFF;    /* Blanco para texto en fondos oscuros */
+    --warning-yellow: #FFD700; /* Amarillo para ramos bloqueados */
+    --border-light: #E6E6FA;  /* Lavanda claro para bordes */
+}
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--primary-light); /* Fondo general de la página */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-dark);
+}
+
+.container {
+    width: 95%;
+    max-width: 1400px; /* Ancho máximo para el contenedor de la malla */
+    background-color: var(--text-light); /* Fondo blanco para el contenedor principal */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra suave para un efecto flotante */
+    border-radius: 12px;
+    padding: 30px;
+    box-sizing: border-box; /* Incluir padding en el ancho total */
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary-dark); /* Título principal en morado vibrante */
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+.curriculum-container {
+    display: flex;
+    gap: 25px; /* Espacio entre columnas de semestre */
+    overflow-x: auto; /* Permite el scroll horizontal en caso de muchos semestres */
+    padding-bottom: 15px; /* Espacio para el scrollbar */
+    justify-content: flex-start; /* Alinea los semestres al inicio */
+}
+
+.semester {
+    flex: 0 0 240px; /* Ancho fijo para cada columna de semestre */
+    background-color: var(--primary-medium); /* Fondo para cada semestre */
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Sombra ligera para semestres */
+    display: flex;
+    flex-direction: column;
+}
+
+.semester h2 {
+    color: var(--text-dark); /* Color de título de semestre */
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.3em;
+    border-bottom: 2px solid var(--primary-dark); /* Línea debajo del título del semestre */
+    padding-bottom: 10px;
+}
+
+.subject {
+    background-color: var(--text-light); /* Fondo de cada ramo */
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, text-decoration 0.3s ease, transform 0.2s ease;
+    display: block;
+    text-align: center;
+    color: var(--text-dark);
+    font-size: 0.95em;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.subject:hover:not(.approved):not(.blocked) {
+    background-color: var(--primary-light); /* Cambio de color al pasar el ratón */
+    transform: translateY(-2px); /* Pequeño efecto de elevación */
+}
+
+/* Estilo para ramos aprobados */
+.subject.approved {
+    background-color: var(--accent-pink); /* Rosa vibrante */
+    color: var(--text-light); /* Texto blanco */
+    text-decoration: line-through; /* Tachado */
+    font-weight: 500;
+    cursor: pointer; /* Aún se puede hacer clic para desaprobar */
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3); /* Sombra rosada */
+}
+
+/* Estilo para ramos bloqueados (requisitos no cumplidos) */
+.subject.blocked {
+    background-color: var(--warning-yellow); /* Amarillo para advertencia */
+    color: var(--text-dark); /* Texto oscuro */
+    cursor: not-allowed; /* Cursor de no permitido */
+    opacity: 0.7; /* Ligeramente transparente */
+    box-shadow: 0 2px 4px rgba(255, 215, 0, 0.2);
+}
+
+/* Mensaje de requisitos faltantes */
+.requisitos-mensaje {
+    background-color: #FFEBEE; /* Rosa claro para el fondo del mensaje */
+    color: #B71C1C; /* Rojo oscuro para el texto */
+    border: 1px solid #EF9A9A; /* Borde rosa/rojo */
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 25px;
+    text-align: center;
+    font-weight: 600;
+    display: none; /* Oculto por defecto */
+    animation: fadeInOut 3s forwards; /* Animación para aparecer y desaparecer */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Animación para el mensaje */
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-10px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-10px); }
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 1024px) {
+    .container {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    .semester {
+        flex: 0 0 220px; /* Reducir un poco el ancho del semestre */
+        padding: 15px;
+    }
+    .subject {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 98%;
+        padding: 15px;
+    }
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+    .curriculum-container {
+        gap: 15px; /* Menos espacio entre semestres */
+    }
+    .semester {
+        flex: 0 0 180px; /* Ancho más pequeño para semestres */
+        padding: 12px;
+    }
+    .semester h2 {
+        font-size: 1.1em;
+    }
+    .subject {
+        padding: 8px;
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        border-radius: 8px;
+        padding: 10px;
+    }
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+    .curriculum-container {
+        gap: 10px; /* Espacio mínimo */
+    }
+    .semester {
+        flex: 0 0 160px; /* Ancho aún más pequeño */
+        padding: 10px;
+        border-radius: 8px;
+    }
+    .semester h2 {
+        font-size: 1em;
+        padding-bottom: 5px;
+    }
+    .subject {
+        padding: 6px;
+        font-size: 0.8em;
+        border-radius: 6px;
+    }
+    .requisitos-mensaje {
+        font-size: 0.9em;
+        padding: 10px;
+        margin-top: 15px;
+    }
+}
